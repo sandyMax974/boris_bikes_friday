@@ -9,4 +9,4 @@ describe 'DockingStation' do
   it 'check if responds to release_bike' do
     expect(DockingStation.new.respond_to?(:release_bike))
   end
-  end
+end
