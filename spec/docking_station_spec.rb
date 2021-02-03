@@ -10,5 +10,5 @@ describe DockingStation do
   #   expect(DockingStation.new.respond_to?(:release_bike))
   # end
 
-  it { is_expected.to respond_to(:park_bike)}
+  it { is_expected.to respond_to(:release_bike)}
 end
