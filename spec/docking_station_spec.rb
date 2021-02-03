@@ -13,7 +13,7 @@ describe DockingStation do
   end
 
   it 'check if its working' do
-    expect{bike.working?}.to eq true
+    expect(bike.working?).to eq true
 	end
 
 	# dock is a method held by DockingStation, taking an argument of (bike)
@@ -30,4 +30,9 @@ describe DockingStation do
   it 'return error if release method called on empty station' do
     expect { docking_station.release_bike }.to raise_error("No bikes avaliable")
   end
+
+  it 'return error if dock method called on full station' do
+    expect { docking_station.dock(bike) }.to raise_error("Station full")
+  end
+
 end
