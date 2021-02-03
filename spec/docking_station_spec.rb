@@ -8,6 +8,7 @@ describe DockingStation do
   bike = Bike.new
 
 	it 'relase a bike' do
+		docking_station.dock(bike)
 		bike = docking_station.release_bike
     expect(bike).to be_instance_of Bike
   end
@@ -23,7 +24,7 @@ describe DockingStation do
 	end
 
 	it 'should return true if a bike is available' do
-    docking_station.dock(bike)
+    # docking_station.dock(bike)
 		expect(docking_station.check_bike).to be true
 	end
 

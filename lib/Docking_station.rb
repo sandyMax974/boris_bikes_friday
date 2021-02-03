@@ -2,22 +2,26 @@ class DockingStation
 	attr_reader :bike_list
 
 	def initialize
-		@bike_list = ['bike']
+		@bike_list = []
 	end
 
 	def release_bike
+		puts "hello"
+		puts @bike_list.length
+		puts "bye"
     if @bike_list.length == 0
       raise "No bikes avaliable"
     else
-		  Bike.new
+		  @bike_list.pop
     end
 	end
 
 	def dock(bike)
-    if @bike_list.length > 0
+    if @bike_list.length >= 20
       raise "Station full"
     else
-		  return "Bike Docked!" if bike.is_a? Bike
+			@bike_list << bike 
+			return "Bike Docked!" 
     end
 	end
 
