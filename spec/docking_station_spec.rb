@@ -1,14 +1,17 @@
 require 'Docking_station'
 
 describe DockingStation do
-  # it 'check if Dockingstation exists' do
-  #   expect(DockingStation.new.is_a?(DockingStation)).to eq true
-  # end
-
-  # it {to respond_to(release_bike)}
-  # it 'check if responds to release_bike' do
-  #   expect(DockingStation.new.respond_to?(:release_bike))
-  # end
-
   it { is_expected.to respond_to(:release_bike)}
+
+  docking_station = DockingStation.new
+  bike = docking_station.release_bike
+
+  it 'relase a bike' do
+    expect(bike).to be_instance_of Bike
+  end
+
+  it 'check if its working' do
+    expect(bike.working?).to eq true
+  end
+
 end
