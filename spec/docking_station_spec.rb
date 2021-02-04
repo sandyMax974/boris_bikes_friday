@@ -50,7 +50,9 @@ describe DockingStation do
 		context 'when a bike is available' do 
 			it 'should return true' do
 				# docking_station.dock(bike)
-				expect(docking_station.check_bike).to be true
+				ds = DockingStation.new
+				ds.dock Bike.new
+				expect(ds.check_bike).to be true
 			end
 		end
 	end

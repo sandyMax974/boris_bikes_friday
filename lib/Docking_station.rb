@@ -25,7 +25,7 @@ class DockingStation
 	def check_bike
 		if @bike_list.length > 0
 			return true
-		else return false
+		else false
 		end
 	end
 
