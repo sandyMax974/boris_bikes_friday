@@ -1,3 +1,5 @@
+require_relative 'Bike'
+
 class DockingStation
 	attr_reader :bike_list
 
@@ -6,35 +8,25 @@ class DockingStation
 	end
 
 	def release_bike
-    if @bike_list.length == 0
-      raise "No bikes avaliable"
-    else
-		  @bike_list.pop
-    end
+    raise "No bikes avaliable" if dock_empty?
+	  bike_list.pop
 	end
 
 	def dock(bike)
-    if @bike_list.length >= 20
-      raise "Station full"
-    else
-			@bike_list << bike 
-			return "Bike Docked!" 
-    end
+    raise "Station full" if dock_full?
+		bike_list << bike
 	end
 
 	def check_bike
-		if @bike_list.length > 0
-			return true
-		else false
-		end
+		bike_list.length > 0
 	end
 
-end
-
-class Bike
-
-  def working?
-    true
-  end
+  private
+	def dock_empty?
+		bike_list.length == 0
+	end
+	def dock_full?
+		bike_list.length >= 20
+	end
 
 end
