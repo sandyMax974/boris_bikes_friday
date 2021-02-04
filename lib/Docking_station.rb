@@ -6,9 +6,6 @@ class DockingStation
 	end
 
 	def release_bike
-		puts "hello"
-		puts @bike_list.length
-		puts "bye"
     if @bike_list.length == 0
       raise "No bikes avaliable"
     else
