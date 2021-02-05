@@ -27,8 +27,8 @@ describe DockingStation do
 
 		context 'when a bike is broken' do
 			it 'does not release' do
-				broken_bike = bike.report_broken
-				docking_station.dock(broken_bike)
+				bike.report_broken
+				docking_station.dock(bike)
 				expect { docking_station.release_bike }.to raise_error("Bike is broken")
 				end
 			end
