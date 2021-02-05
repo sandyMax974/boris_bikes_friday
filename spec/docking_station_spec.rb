@@ -24,7 +24,16 @@ describe DockingStation do
 				expect { docking_station.release_bike }.to raise_error("No bikes avaliable")
 			end
 		end
-	end
+
+		context 'when a bike is broken' do
+			it 'does not release' do
+				broken_bike = bike.report_broken
+				docking_station.dock(broken_bike)
+				expect { docking_station.release_bike }.to raise_error("Bike is broken")
+				end
+			end
+		end
+
 
 	describe '#dock' do
 		let(:empty_docking) { subject } # this will break once the @bike_list is initialise with some bikes
