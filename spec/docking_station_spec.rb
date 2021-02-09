@@ -1,66 +1,69 @@
-require 'Docking_station'
+require 'docking_station'
 
 describe DockingStation do
+  let(:bike) { double :bike }
 
-	it { is_expected.to respond_to(:check_bike)}
-
-  let(:docking_station) { subject } # DockingStation.new
-  bike = Bike.new
-
-	# dock is a method held by DockingStation, taking an argument of (bike)
-
-	describe '#release_bike' do
-
-		it 'release a bike' do
-			docking_station.dock(bike)
-			bike = docking_station.release_bike
-			expect(bike).to be_instance_of Bike
+		it 'should contain 20 bikes by default' do
+			expect(subject.capacity).to eq 20
 		end
 
-		it { is_expected.to respond_to(:release_bike)}
+		it 'should take a capacity argument when created' do
+			value = 5
+			ds = DockingStation.new(value)
+			expect(ds.capacity).to eq value
+		end
 
-		context 'When Docking Station is Empty' do
-			it 'return error if release method called' do
-				expect { docking_station.release_bike }.to raise_error("No bikes avaliable")
+		describe '#release_bike' do
+			it 'release a bike' do
+				subject.dock Bike.new
+				bike = subject.release_bike
+				expect(bike).to be_instance_of Bike # => can I use a double here?
 			end
-		end
 
-		context 'when a bike is broken' do
-			it 'does not release' do
-				bike.report_broken
-				docking_station.dock(bike)
-				expect { docking_station.release_bike }.to raise_error("Bike is broken")
+			context 'when docking station is empty' do
+				it 'raise an error' do
+					expect { subject.release_bike }.to raise_error("No bikes avalaible")
+				end
+			end
+
+			context 'when a bike is broken' do
+				it 'raise an error' do
+					allow(bike).to receive(:broken) { true }
+					subject.dock bike
+					expect { subject.release_bike }.to raise_error("Bike is broken")
+					end
+				end
+			end
+
+		describe '#dock' do
+			it 'can dock a bike' do
+				expect(subject.dock(bike).count).to eq (1)
+			end
+
+			context 'when docking station is full' do
+				it 'raise error' do
+					20.times { subject.dock bike }
+					expect { subject.dock(bike) }.to raise_error("Station full")
 				end
 			end
 		end
 
-
-	describe '#dock' do
-		let(:empty_docking) { subject } # this will break once the @bike_list is initialise with some bikes
-
-		it 'can dock a bike' do
-			expect(docking_station.dock(bike).count).to eq (1)
-		end
-
-		context 'When Docking Station is Full' do
-			it 'return error if dock method called on full station' do
-				# allow(docking_station).to receive(:bike_list) {Array.new(20) { Bike.new }}
-				ds = DockingStation.new
-				20.times { ds.dock Bike.new }
-				expect { ds.dock(Bike.new) }.to raise_error("Station full")
+		describe '#check_bike' do
+			context 'when a bike is available' do
+				it 'should return true' do
+					subject.dock bike
+					expect(subject.check_bike).to be true
+				end
 			end
 		end
-	end
 
-	describe '#check_bike' do
-		context 'when a bike is available' do
-			it 'should return true' do
-				# docking_station.dock(bike)
-				ds = DockingStation.new
-				ds.dock Bike.new
-				expect(ds.check_bike).to be true
+		describe '#dock_broken' do
+			it 'should change the bike status to broken' do
+				bike = instance_double('bike', :broken => true, :report_broken => false)
+				subject.dock_broken(bike)
+				expect(bike.broken).to be true
+				# expect { subject.dock_broken(bike) }.to change { bike.broken }.to true
+				expect(subject.bikes.count).to eq 1
 			end
 		end
-	end
-
 end
